@@ -31,11 +31,6 @@ class Dropio::Drop < Dropio::Resource
     Dropio::Resource.client.change_drop_name(self,new_name)
   end
   
-  # Gets the drop's embeddable uploader code
-  def upload_code
-    Dropio::Resource.client.drop_upload_code(self)
-  end
-  
   # Empties the drop, including it's assets.
   def empty
     Dropio::Resource.client.empty_drop(self)
