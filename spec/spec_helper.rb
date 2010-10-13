@@ -10,8 +10,8 @@ FakeWeb.allow_net_connect = false
 
 $: << File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-require 'dropio'
-include Dropio
+require 'rmb'
+include Rmb
 
 module Enumerable
   # Apply an expectation to each object in the collection.

@@ -3,15 +3,15 @@ require File.dirname(__FILE__) + '/../spec_helper.rb'
 describe Drop do
   
   before(:each) do
-    @client = Dropio::Client.new
-    @api = stub(Dropio::Api)
+    @client = Rmb::Client.new
+    @api = stub(Rmb::Api)
     @client.service = @api
     
-    Dropio::Resource.stub!(:client).and_return(@client)
-    Dropio::Resource.client.should == @client
-    Dropio::Resource.client.service.should == @api
+    Rmb::Resource.stub!(:client).and_return(@client)
+    Rmb::Resource.client.should == @client
+    Rmb::Resource.client.service.should == @api
     
-    @mydrop = Dropio::Drop.new(:name => "test_drop")
+    @mydrop = Rmb::Drop.new(:name => "test_drop")
   end
   
   it "should have the attributes of a Drop" do
@@ -115,8 +115,8 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged','DropioS3').and_return({})
-    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://rmb.io/test/pinged', 'DropioS3').should == @asset
+    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged','RmbS3').and_return({})
+    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://rmb.io/test/pinged', 'RmbS3').should == @asset
   end
   
   it "should create notes from title and contents and description" do

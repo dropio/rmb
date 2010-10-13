@@ -1,20 +1,20 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Dropio::Asset do
+describe Rmb::Asset do
   before(:each) do
-    @drop = Dropio::Drop.new
+    @drop = Rmb::Drop.new
     @drop.name = "test_drop"
-    @asset = Dropio::Asset.new
+    @asset = Rmb::Asset.new
     @asset.name = "test_asset"
     @asset.drop = @drop
 
-    @client = Dropio::Client.new
-    @api = stub(Dropio::Api)
+    @client = Rmb::Client.new
+    @api = stub(Rmb::Api)
     @client.service = @api
 
-    Dropio::Resource.stub!(:client).and_return(@client)
-    Dropio::Resource.client.should == @client
-    Dropio::Resource.client.service.should == @api
+    Rmb::Resource.stub!(:client).and_return(@client)
+    Rmb::Resource.client.should == @client
+    Rmb::Resource.client.service.should == @api
   end
 
   it "should have the attributes of an Asset" do
@@ -45,8 +45,8 @@ describe Dropio::Asset do
 
   it "should destroy roles at locations" do
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:delete_role).with(@drop.name, @asset.id, "thumbnail", "DropioS3").and_return({})
-    @asset.destroy_location!("thumbnail","DropioS3")
+    @api.stub!(:delete_role).with(@drop.name, @asset.id, "thumbnail", "RmbS3").and_return({})
+    @asset.destroy_location!("thumbnail","RmbS3")
   end
 
   it "should send itself to another drop." do

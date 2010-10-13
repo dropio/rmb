@@ -1,4 +1,4 @@
-class Dropio::Resource
+class Rmb::Resource
   
   def initialize(params = {})
     params.each do |key,val|
@@ -7,7 +7,7 @@ class Dropio::Resource
   end
 
   def self.client
-    @@client ||= Dropio::Client.new
+    @@client ||= Rmb::Client.new
   end
   
 end

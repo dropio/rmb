@@ -5,25 +5,25 @@ require 'net/http/post/multipart'
 require 'json'
 require 'active_support/ordered_hash'
 
-class Dropio::Api
+class Rmb::Api
   include HTTParty
   format :json
 
   RUBY_VERSION = %w{MAJOR MINOR TEENY}.map { |k| Config::CONFIG[k] }.join(".")
-  USER_AGENT_STRING = "DropioAPI-Ruby/#{Dropio::VERSION} (Ruby #{RUBY_VERSION} #{Config::CONFIG["host"]}; +http://github.com/dropio/dropio/tree/)"
+  USER_AGENT_STRING = "RmbAPI-Ruby/#{Rmb::VERSION} (Ruby #{RUBY_VERSION} #{Config::CONFIG["host"]}; +http://github.com/rmb/rmb/tree/)"
   headers 'Accept' => 'application/json', 'User-Agent' => USER_AGENT_STRING, "Content-Type" => 'application/json'
   def initialize
-    self.class.debug_output $stderr if Dropio::Config.debug
-    self.class.base_uri Dropio::Config.api_url
-    self.class.default_options[:timeout] = Dropio::Config.timeout
+    self.class.debug_output $stderr if Rmb::Config.debug
+    self.class.base_uri Rmb::Config.api_url
+    self.class.default_options[:timeout] = Rmb::Config.timeout
   end
 
   def drop(drop_name)
-    dropio_get("/drops/#{drop_name}", {})
+    rmb_get("/drops/#{drop_name}", {})
   end
 
   def all_drops(page = 1)
-    dropio_get("/accounts/drops", {:page => page})
+    rmb_get("/accounts/drops", {:page => page})
   end
 
   def generate_drop_url(drop_name)
@@ -31,45 +31,45 @@ class Dropio::Api
   end
 
   def create_drop(params = {})
-    dropio_post("/drops",params)
+    rmb_post("/drops",params)
   end
 
   def update_drop(drop_name, params = {})
-    dropio_put("/drops/#{drop_name}", params)
+    rmb_put("/drops/#{drop_name}", params)
   end
 
   def change_drop_name(drop_name, new_name)
     params = {:name => new_name}
-    dropio_put("/drops/#{drop_name}", params)
+    rmb_put("/drops/#{drop_name}", params)
   end
 
   def empty_drop(drop_name)
-    dropio_put("/drops/#{drop_name}/empty", {})
+    rmb_put("/drops/#{drop_name}/empty", {})
   end
 
   def delete_drop(drop_name)
-    dropio_delete("/drops/#{drop_name}", {})
+    rmb_delete("/drops/#{drop_name}", {})
   end
 
   def promote_nick(drop_name, nick)
-    dropio_post("/drops/#{drop_name}", {:nick => nick})
+    rmb_post("/drops/#{drop_name}", {:nick => nick})
   end
 
   def drop_upload_code(drop_name)
-    dropio_get("/drops/#{drop_name}/upload_code", {})
+    rmb_get("/drops/#{drop_name}/upload_code", {})
   end
 
   def create_link(drop_name, url, title = nil, description = nil)
-    dropio_post("/drops/#{drop_name}/assets", {:url => url, :title => title, :description => description})
+    rmb_post("/drops/#{drop_name}/assets", {:url => url, :title => title, :description => description})
   end
 
   def create_note(drop_name, contents, title = nil, description = nil)
     params = {:contents => contents, :title => title, :description => description}
-    dropio_post("/drops/#{drop_name}/assets", params)
+    rmb_post("/drops/#{drop_name}/assets", params)
   end
 
   def add_file(drop_name, file_path, description = nil, conversion = nil, pingback_url = nil, output_locations = nil)
-    url  = URI.parse(Dropio::Config.upload_url)
+    url  = URI.parse(Rmb::Config.upload_url)
     locs = output_locations.is_a?(Array) ? output_locations.join(',') : output_locations
     r    = nil
 
@@ -77,9 +77,9 @@ class Dropio::Api
       mime_type = (MIME::Types.type_for(file_path)[0] || MIME::Types["application/octet-stream"][0])
 
       params = {
-        :api_key => Dropio::Config.api_key.to_s,
+        :api_key => Rmb::Config.api_key.to_s,
         :format => 'json',
-        :version           => Dropio::Config.version
+        :version           => Rmb::Config.version
       }
 
       # stuff passed in by a user. Done like this as if you pass a parameter without a value it can cause an issue (with the output_locations anyway)
@@ -96,7 +96,7 @@ class Dropio::Api
 
       req  = Net::HTTP::Post::Multipart.new(url.path, params)
       http = Net::HTTP.new(url.host, url.port)
-      http.set_debug_output $stderr if Dropio::Config.debug
+      http.set_debug_output $stderr if Rmb::Config.debug
       r = http.start{|http| http.request(req)}
     end
 
@@ -104,15 +104,15 @@ class Dropio::Api
   end
 
   def add_file_from_url(drop_name, url, description = nil, convert_to = nil, pingback_url = nil)
-    dropio_post("/drops/#{drop_name}/assets", {:file_url => url, :description => description, :convert_to => convert_to, :pingback_url => pingback_url})
+    rmb_post("/drops/#{drop_name}/assets", {:file_url => url, :description => description, :convert_to => convert_to, :pingback_url => pingback_url})
   end
 
   def assets(drop_name, page = 1, order = :oldest)
-    dropio_get("/drops/#{drop_name}/assets", {:page => page, :order => order.to_s, :show_pagination_details => true})
+    rmb_get("/drops/#{drop_name}/assets", {:page => page, :order => order.to_s, :show_pagination_details => true})
   end
 
   def asset(drop_name, asset_name)
-    dropio_get("/drops/#{drop_name}/assets/#{asset_name}", {})
+    rmb_get("/drops/#{drop_name}/assets/#{asset_name}", {})
   end
   
   def generate_asset_url(drop_name, asset_name)
@@ -122,8 +122,8 @@ class Dropio::Api
   def generate_original_file_url(drop_name, asset_id, time_to_live = 600)
     #TODO - signed download URLs
     #this is now available via the API response itself
-    download_url = Dropio::Config.api_url + "/drops/#{drop_name}/assets/#{asset_id}/download/original?"
-    params = {:version => Dropio::Config.version, :api_key=>Dropio::Config.api_key.to_s, :format=>'json'}
+    download_url = Rmb::Config.api_url + "/drops/#{drop_name}/assets/#{asset_id}/download/original?"
+    params = {:version => Rmb::Config.version, :api_key=>Rmb::Config.api_key.to_s, :format=>'json'}
     params = sign_if_needed(params)
     paramstring = ''
     params.each do |k, v|
@@ -134,46 +134,46 @@ class Dropio::Api
   end
 
   def update_asset(drop_name, asset_name, params = {})
-    dropio_put("/drops/#{drop_name}/assets/#{asset_name}", params)
+    rmb_put("/drops/#{drop_name}/assets/#{asset_name}", params)
   end
   
   def change_asset_name(drop_name, asset_name, new_name)
     params = {:name => new_name}
-    dropio_put("/drops/#{drop_name}/assets/#{asset_name}", params)
+    rmb_put("/drops/#{drop_name}/assets/#{asset_name}", params)
   end
 
   def delete_asset(drop_name, asset_id)
-    dropio_delete("/drops/#{drop_name}/assets/#{asset_id}", {})
+    rmb_delete("/drops/#{drop_name}/assets/#{asset_id}", {})
   end
 
   def delete_role(drop_name, asset_id, role, location=nil)
-    dropio_delete("/drops/#{drop_name}/assets/#{asset_id}", {:role => role, :output_location => location})
+    rmb_delete("/drops/#{drop_name}/assets/#{asset_id}", {:role => role, :output_location => location})
   end
 
   def send_asset_to_drop(drop_name, asset_name, target_drop)
-    dropio_post("/drops/#{drop_name}/assets/#{asset_name}/send_to", {:medium => "drop", :drop_name => target_drop})
+    rmb_post("/drops/#{drop_name}/assets/#{asset_name}/send_to", {:medium => "drop", :drop_name => target_drop})
   end
   
   def copy_asset(drop_name, asset_name, target_drop)
     params = {:drop_name => target_drop}
-    dropio_post("/drops/#{drop_name}/assets/#{asset_name}/copy", params)
+    rmb_post("/drops/#{drop_name}/assets/#{asset_name}/copy", params)
   end
   
   def move_asset(drop_name, asset_name, target_drop)
     params = {:drop_name => target_drop}
-    dropio_post("/drops/#{drop_name}/assets/#{asset_name}/move", params)
+    rmb_post("/drops/#{drop_name}/assets/#{asset_name}/move", params)
   end
 
   def create_pingback_subscription(drop_name, url, events = {})
-    dropio_post("/drops/#{drop_name}/subscriptions", :body => {:type => "pingback", :url => url}.merge(events))
+    rmb_post("/drops/#{drop_name}/subscriptions", :body => {:type => "pingback", :url => url}.merge(events))
   end
 
   def subscriptions(drop_name, page)
-    dropio_get("/drops/#{drop_name}/subscriptions", :query => {:page => page, :show_pagination_details => true})
+    rmb_get("/drops/#{drop_name}/subscriptions", :query => {:page => page, :show_pagination_details => true})
   end
 
   def delete_subscription(drop_name, subscription_id)
-    dropio_delete("/drops/#{drop_name}/subscriptions/#{subscription_id}", {})
+    rmb_delete("/drops/#{drop_name}/subscriptions/#{subscription_id}", {})
   end
 
   def get_signature(params={})
@@ -183,11 +183,11 @@ class Dropio::Api
   end
 
   def job(id, drop_name, asset_name_or_id)
-    dropio_get("/drops/#{drop_name}/assets/#{asset_name_or_id}/jobs/#{id}", {})
+    rmb_get("/drops/#{drop_name}/assets/#{asset_name_or_id}/jobs/#{id}", {})
   end
 
   def create_job(job = {})
-    dropio_post("/jobs",job)
+    rmb_post("/jobs",job)
   end
   alias_method :convert, :create_job
 
@@ -196,8 +196,8 @@ class Dropio::Api
   def sign_request(params={}, request="POST")
     #returns all params, including signature and any required params for signing (currently only timestamp)
     params_for_sig = params.clone
-    params_for_sig[:api_key] = Dropio::Config.api_key.to_s
-    params_for_sig[:version] = Dropio::Config.version.to_s
+    params_for_sig[:api_key] = Rmb::Config.api_key.to_s
+    params_for_sig[:version] = Rmb::Config.version.to_s
 
     if params[:signature_mode] != "OPEN"
       #RPC always includes format here, so in NORMAL and STRICT mode we need to include it in our sig if not specified
@@ -208,13 +208,13 @@ class Dropio::Api
     #Sort the clean params and put them into an ordered hash for to_json 
     orderedparams = sort_hash_recursively(params_for_sig)
     #compute the expected signature
-    puts "\r\nSigning this string: " + orderedparams.to_json + "\r\n" if Dropio::Config.debug
-    params[:signature] = Digest::SHA1.hexdigest(orderedparams.to_json + Dropio::Config.api_secret)
+    puts "\r\nSigning this string: " + orderedparams.to_json + "\r\n" if Rmb::Config.debug
+    params[:signature] = Digest::SHA1.hexdigest(orderedparams.to_json + Rmb::Config.api_secret)
     params
   end
   
   def sign_if_needed(params = {}, method="POST")
-    if Dropio::Config.api_secret
+    if Rmb::Config.api_secret
       params = add_required_signing_params(params)
       params = sign_request(params, method)
       params
@@ -230,24 +230,24 @@ class Dropio::Api
   end
 
   def add_default_params(params = {})
-    default_params = {:api_key => Dropio::Config.api_key.to_s, :version => Dropio::Config.version.to_s, :format => "json" }
+    default_params = {:api_key => Rmb::Config.api_key.to_s, :version => Rmb::Config.version.to_s, :format => "json" }
     params = params.merge(default_params)
     params
   end
 
-  def dropio_get(action, params={})
+  def rmb_get(action, params={})
     self.class.get(action, :query => add_default_params(sign_if_needed(params, "GET")))
   end
 
-  def dropio_post(action, params={})
+  def rmb_post(action, params={})
     self.class.post(action, :body => add_default_params(sign_if_needed(params, "POST")).to_json)
   end
 
-  def dropio_put(action, params={})
+  def rmb_put(action, params={})
     self.class.put(action, :body => add_default_params(sign_if_needed(params, "PUT")).to_json)
   end
 
-  def dropio_delete(action,params={})
+  def rmb_delete(action,params={})
     self.class.delete(action, :body => add_default_params(sign_if_needed(params, "DELETE")).to_json)
   end
   

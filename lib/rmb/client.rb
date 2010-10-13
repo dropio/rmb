@@ -1,8 +1,8 @@
-class Dropio::Client
+class Rmb::Client
   attr_accessor :service
 
   def initialize
-    self.service = Dropio::Api.new
+    self.service = Rmb::Api.new
   end
   
   def drop(drop_name)
@@ -170,13 +170,13 @@ class Dropio::Client
     end
 
     case type
-    when :drop then return Dropio::Drop.new(response)
-    when :drops then return response['drops'].collect{|d| Dropio::Drop.new(d)}
-    when :asset then return Dropio::Asset.new(response)
-    when :assets then return response['assets'].collect{|a| Dropio::Asset.new(a)}
-    when :subscription then return Dropio::Subscription.new(response)
-    when :subscriptions then return response['subscriptions'].collect{|s| Dropio::Subscription.new(s)}
-    when :job then return Dropio::Job.new(response)
+    when :drop then return Rmb::Drop.new(response)
+    when :drops then return response['drops'].collect{|d| Rmb::Drop.new(d)}
+    when :asset then return Rmb::Asset.new(response)
+    when :assets then return response['assets'].collect{|a| Rmb::Asset.new(a)}
+    when :subscription then return Rmb::Subscription.new(response)
+    when :subscriptions then return response['subscriptions'].collect{|s| Rmb::Subscription.new(s)}
+    when :job then return Rmb::Job.new(response)
     when :response then return parse_response(response)
     end
   end
@@ -184,10 +184,10 @@ class Dropio::Client
   def parse_response(response)
     case response.code
     when 200 then return response
-    when 400 then raise Dropio::RequestError, parse_error_message(response)
-    when 403 then raise Dropio::AuthorizationError, parse_error_message(response)
-    when 404 then raise Dropio::MissingResourceError, parse_error_message(response)
-    when 500 then raise Dropio::ServerError, "There was a problem connecting to rmb.io."
+    when 400 then raise Rmb::RequestError, parse_error_message(response)
+    when 403 then raise Rmb::AuthorizationError, parse_error_message(response)
+    when 404 then raise Rmb::MissingResourceError, parse_error_message(response)
+    when 500 then raise Rmb::ServerError, "There was a problem connecting to rmb.io."
     else
       raise "Received an unexpected HTTP response: #{response.code} #{response.body}"
     end
