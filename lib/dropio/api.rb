@@ -253,21 +253,18 @@ class Dropio::Api
   
   def sort_hash_recursively(oldhash = {}, depth = 0)
     return false if depth > 4
-    #oldhash.stringify_keys!
     sortedhash = ActiveSupport::OrderedHash.new
-    oldhash.keys.sort_by {|s| s.to_s}.each {|key|
-    if oldhash[key].is_a? Hash
-        sortedhash[key] = sort_hash_recursively(oldhash[key], depth + 1)
-    elsif oldhash[key].is_a? Array
-        oldhash[key].map! do |element|
-            element = sort_hash_recursively(element, depth + 1)
+    oldhash.keys.sort_by {|s| s.to_s}.each {|key| 
+        if oldhash[key].is_a? Hash
+            sortedhash[key] = sort_hash_recursively(oldhash[key], depth + 1)
+        elsif oldhash[key].is_a? Array
+            oldhash[key].map! do |element|
+                element = sort_hash_recursively(element, depth + 1)
+            end
+            sortedhash[key] = oldhash[key]
+        else
+            sortedhash[key] = oldhash[key].to_s
         end
-        sortedhash[key] = oldhash[key]
-    elsif (depth == 0 && (oldhash[key].is_a?(Integer)) || (oldhash[key].is_a?(TrueClass)) || (oldhash[key].is_a?(FalseClass)))
-        sortedhash[key] = oldhash[key].to_s
-    else
-        sortedhash[key] = oldhash[key]
-    end
     }
     return sortedhash
   end
