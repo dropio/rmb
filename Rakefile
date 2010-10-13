@@ -12,13 +12,13 @@ begin
   Echoe.new('rmb', Rmb::VERSION) do |echoe|
     echoe.summary = "A Ruby client library for the Rich Media Backbone (RMB) API (http://rmb.io)"
     echoe.author = ["Jake Good", "Eric Skiff", "Kunal Shah", "Seth Thomas Rasmussen", "Bryan Woods"]
-    echoe.email = ["jake@dropio.com", "eric@dropio.com", "kunal@dropio.com", "seth@dropio.com"]
+    echoe.email = ["jake@dropio.com", "eric@dropio.com", "kunal@dropio.com", "seth@dropio.com", "bryan@dropio.com"]
     echoe.url = "http://github.com/dropio/rmb"
     echoe.retain_gemspec = true
     echoe.changelog = "History.rdoc"
     
     # TODO have this generated from Gemfile or vice versa
-    echoe.runtime_dependencies     = ["mime-types", "json", "httparty 0.6.1", "multipart-post 1.0.1"]
+    echoe.runtime_dependencies     = ["mime-types", "json", "httparty 0.6.1", "multipart-post 1.0.1", "activesupport 2.3.9"]
     echoe.development_dependencies = ["rspec", "diff-lcs", "fakeweb"]
     
     echoe.ignore_pattern = "tmtags"
