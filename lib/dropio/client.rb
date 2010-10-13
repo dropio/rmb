@@ -187,7 +187,7 @@ class Dropio::Client
     when 400 then raise Dropio::RequestError, parse_error_message(response)
     when 403 then raise Dropio::AuthorizationError, parse_error_message(response)
     when 404 then raise Dropio::MissingResourceError, parse_error_message(response)
-    when 500 then raise Dropio::ServerError, "There was a problem connecting to Drop.io."
+    when 500 then raise Dropio::ServerError, "There was a problem connecting to rmb.io."
     else
       raise "Received an unexpected HTTP response: #{response.code} #{response.body}"
     end
@@ -198,7 +198,7 @@ class Dropio::Client
     if (error_hash && error_hash.is_a?(Hash) && error_hash["response"] && error_hash["response"]["message"])
       return error_hash["response"]["message"]
     else
-      return "There was a problem connecting to Drop.io."
+      return "There was a problem connecting to rmb.io."
     end
   end
 

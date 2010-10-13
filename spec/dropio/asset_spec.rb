@@ -25,7 +25,7 @@ describe Dropio::Asset do
 
   it "should save itself" do
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    expected_hash = {:url=> "http://drop.io", :contents=>nil, :description=>nil, :title=>nil}
+    expected_hash = {:url=> "http://rmb.io", :contents=>nil, :description=>nil, :title=>nil}
     @asset.url = expected_hash[:url]
     @api.stub!(:update_asset).and_return({})
     @asset.save

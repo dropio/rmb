@@ -16,9 +16,9 @@ module Dropio
   
 end
 
-Dropio::Config.base_url   = "http://drop.io"
-Dropio::Config.api_url    = "http://api.drop.io"
-Dropio::Config.upload_url = "http://assets.drop.io/upload"
+Dropio::Config.base_url   = "http://down.rmb.io"
+Dropio::Config.api_url    = "http://api.rmb.io"
+Dropio::Config.upload_url = "http://up.rmb.io/upload"
 Dropio::Config.version    = "3.0"
 Dropio::Config.debug      = false
 Dropio::Config.timeout    = 60 # Default in Ruby

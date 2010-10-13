@@ -91,8 +91,8 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://drop.io/test/pinged').and_return({})
-    @mydrop.add_file_from_url("http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://drop.io/test/pinged').should == @asset
+    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged').and_return({})
+    @mydrop.add_file_from_url("http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged').should == @asset
   end
   
   it "should add files from a path" do
@@ -107,16 +107,16 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://drop.io/test/pinged', nil).and_return({})
-    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://drop.io/test/pinged').should == @asset
+    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged', nil).and_return({})
+    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://rmb.io/test/pinged').should == @asset
   end
 
   it "should add files from a path with pingback url, conversion target, and output location" do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://drop.io/test/pinged','DropioS3').and_return({})
-    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://drop.io/test/pinged', 'DropioS3').should == @asset
+    @api.should_receive(:add_file).with(@mydrop.name,"/mypath/myfile.txt","description", 'H264_HIGH_RES', 'http://rmb.io/test/pinged','DropioS3').and_return({})
+    @mydrop.add_file("/mypath/myfile.txt","description",'H264_HIGH_RES', 'http://rmb.io/test/pinged', 'DropioS3').should == @asset
   end
   
   it "should create notes from title and contents and description" do
@@ -131,16 +131,16 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:create_link).with(@mydrop.name,"http://drop.io","drop.io","The best!").and_return({})
-    @mydrop.create_link("http://drop.io","drop.io","The best!").should == @asset
+    @api.should_receive(:create_link).with(@mydrop.name,"http://rmb.io","rmb.io","The best!").and_return({})
+    @mydrop.create_link("http://rmb.io","rmb.io","The best!").should == @asset
   end
   
   it "should be able to create pingback subscriptions" do
     @sub = stub(Subscription)
     @sub.should_receive(:drop=).once
     @client.should_receive(:handle).with(:subscription,{}).and_return(@sub)
-    @api.should_receive(:create_pingback_subscription).with(@mydrop.name,"http://drop.io",{}).and_return({})
-    @mydrop.create_pingback_subscription("http://drop.io")
+    @api.should_receive(:create_pingback_subscription).with(@mydrop.name,"http://rmb.io",{}).and_return({})
+    @mydrop.create_pingback_subscription("http://rmb.io")
   end
   
   it "should be able to get a list of subscriptions back" do

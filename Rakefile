@@ -10,7 +10,7 @@ begin
   require 'echoe'
 
   Echoe.new('dropio', Dropio::VERSION) do |echoe|
-    echoe.summary = "A Ruby client library for the Drop.io Rich Media Backbone (RMB) API (http://backbone.drop.io)"
+    echoe.summary = "A Ruby client library for the Rich Media Backbone (RMB) API (http://rmb.io)"
     echoe.author = ["Jake Good", "Eric Skiff", "Kunal Shah", "Seth Thomas Rasmussen"]
     echoe.email = ["jake@dropio.com", "eric@dropio.com", "kunal@dropio.com", "seth@dropio.com"]
     echoe.url = "http://github.com/dropio/dropio"
