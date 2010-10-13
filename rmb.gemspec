@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jake Good, Eric Skiff, Kunal Shah, Seth Thomas Rasmussen, Matthew Rathbone", "Bryan Woods"]
   s.date = %q{2010-09-21}
-  s.description = %q{A Ruby client library for the Rich Media Backbone (RMB) API (http://rmb.io). Please send all feedback to backbone@rmb.com}
+  s.description = %q{A Ruby client library for the Rich Media Backbone (RMB) API (http://rmb.io). Please send all feedback to backbone@dropio.com}
   s.email = ["jake@dropio.com", "eric@dropio.com", "kunal@dropio.com", "seth@dropio.com", "matthew@dropio.com", "bryan@dropio.com"]
   s.extra_rdoc_files = ["History.rdoc", "Readme.rdoc", "Todo.rdoc"]
   s.files = ["Gemfile", "History.rdoc", "LICENSE.txt", "Manifest", "Rakefile", "Readme.rdoc", "Todo.rdoc", "rmb.gemspec", "lib/rmb.rb", "lib/rmb/api.rb", "lib/rmb/asset.rb", "lib/rmb/client.rb", "lib/rmb/drop.rb", "lib/rmb/job.rb", "lib/rmb/resource.rb", "lib/rmb/subscription.rb", "lib/rmb/version.rb", "spec/rmb/api_spec.rb", "spec/rmb/asset_spec.rb", "spec/rmb/client_spec.rb", "spec/rmb/drop_spec.rb", "spec/rmb/subscription_spec.rb", "spec/rmb_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
