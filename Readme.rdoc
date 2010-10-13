@@ -2,7 +2,7 @@
 
 = RMB API library for Ruby
 
-Documentation for this library is available here: <http://backbonedocs.drop.io/Ruby-API-Client-Library>
+Documentation for this library is available here: http://backbonedocs.drop.io/Ruby-API-Client-Library
 
 Before using the Rmb library, the application must set an API key.  This key will be used for all requests to the server.  To get an API key, go to http://backbone.drop.io.  Then make sure you set the API key before you use the API:
 
