@@ -14,17 +14,12 @@ class Dropio::Asset < Dropio::Resource
     Dropio::Resource.client.change_asset_name(self,new_name)
   end
   
-  # Gets the Assets's embed code
-  def embed_code
-    Dropio::Resource.client.asset_embed_code(self)
-  end       
-  
-  # Saves the Asset back to drop.io.
+  # Saves the Asset back to the RMB
   def save
     Dropio::Resource.client.update_asset(self)
   end
   
-  # Destroys the Asset on drop.io.  Don't try to use an Asset after destroying it.
+  # Destroys the Asset on the RMB  Don't try to use an Asset after destroying it.
   def destroy!
     Dropio::Resource.client.delete_asset(self)
     return nil
