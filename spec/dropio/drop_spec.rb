@@ -15,7 +15,7 @@ describe Drop do
   end
   
   it "should have the attributes of a Drop" do
-    Drop.new.should respond_to(:name, :email, :guest_token, :description, :expires_at, 
+    Drop.new.should respond_to(:name, :email, :description, :expires_at, 
                   :expiration_length, :max_bytes, :current_bytes, :asset_count, :chat_password, 
                   :password, :admin_password, :admin_email, :email_key)
   end
@@ -32,17 +32,17 @@ describe Drop do
     Drop.find("mydrop").should == @mydrop
   end
 
-  it "should find drops by name and token" do
+  it "should find drops by name" do
     @client.should_receive(:handle).with(:drop,{}).and_return(@mydrop)
-    @api.should_receive(:drop).with("mydrop", "d85a6").and_return({})
-    Drop.find("mydrop", "d85a6").should == @mydrop
+    @api.should_receive(:drop).with("mydrop").and_return({})
+    Drop.find("mydrop").should == @mydrop
   end
   
   it "should find a set of related assets" do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:assets,{}).and_return([@asset])
-    @api.stub!(:assets).with(@mydrop.name,1,:oldest,@mydrop.default_token).and_return({})
+    @api.stub!(:assets).with(@mydrop.name,1,:oldest).and_return({})
     @mydrop.assets.should == [@asset]
   end
   
@@ -50,12 +50,6 @@ describe Drop do
     @client.should_receive(:handle).with(:drop,{}).and_return(@mydrop)
     @api.should_receive(:create_drop).with({:name => "tester"}).and_return({})
     Drop.create({:name => "tester"}).should == @mydrop
-  end
-  
-  it "should fetch the upload embed code" do
-    @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.should_receive(:drop_upload_code).with(@mydrop.name,@mydrop.default_token).and_return({})
-    @mydrop.upload_code
   end
   
   it "should be able to empty itself" do
@@ -89,7 +83,7 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", nil, nil, @mydrop.default_token).and_return({})
+    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", nil, nil).and_return({})
     @mydrop.add_file_from_url("http://myurl.com/myfile.txt","description").should == @asset
   end
   
@@ -97,7 +91,7 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://drop.io/test/pinged', @mydrop.default_token).and_return({})
+    @api.should_receive(:add_file_from_url).with(@mydrop.name,"http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://drop.io/test/pinged').and_return({})
     @mydrop.add_file_from_url("http://myurl.com/myfile.txt", "description", 'H264_HIGH_RES', 'http://drop.io/test/pinged').should == @asset
   end
   
@@ -129,7 +123,7 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:create_note).with(@mydrop.name,"contents", "title","description",@mydrop.default_token).and_return({})
+    @api.should_receive(:create_note).with(@mydrop.name,"contents", "title","description").and_return({})
     @mydrop.create_note("contents","title", "description").should == @asset
   end
   
@@ -137,7 +131,7 @@ describe Drop do
     @asset = stub(Asset)
     @asset.should_receive(:drop=).once
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:create_link).with(@mydrop.name,"http://drop.io","drop.io","The best!",@mydrop.default_token).and_return({})
+    @api.should_receive(:create_link).with(@mydrop.name,"http://drop.io","drop.io","The best!").and_return({})
     @mydrop.create_link("http://drop.io","drop.io","The best!").should == @asset
   end
   
@@ -145,7 +139,7 @@ describe Drop do
     @sub = stub(Subscription)
     @sub.should_receive(:drop=).once
     @client.should_receive(:handle).with(:subscription,{}).and_return(@sub)
-    @api.should_receive(:create_pingback_subscription).with(@mydrop.name,"http://drop.io",{},@mydrop.default_token).and_return({})
+    @api.should_receive(:create_pingback_subscription).with(@mydrop.name,"http://drop.io",{}).and_return({})
     @mydrop.create_pingback_subscription("http://drop.io")
   end
   
@@ -158,7 +152,7 @@ describe Drop do
   end
   
   it "should generate a signed url" do
-    @api.should_receive(:generate_drop_url).with(@mydrop.name,@mydrop.default_token)    
+    @api.should_receive(:generate_drop_url).with(@mydrop.name)    
     @mydrop.generate_url
   end
   

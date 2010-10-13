@@ -27,7 +27,7 @@ describe Dropio::Asset do
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
     expected_hash = {:url=> "http://drop.io", :contents=>nil, :description=>nil, :title=>nil}
     @asset.url = expected_hash[:url]
-    @api.stub!(:update_asset).with(@drop.name, @asset.id, expected_hash,@drop.default_token).and_return({})
+    @api.stub!(:update_asset).with(@drop.name, @asset.id, expected_hash).and_return({})
     @asset.save
   end
 
@@ -52,50 +52,42 @@ describe Dropio::Asset do
   it "should send itself to another drop." do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
-    @target_drop.guest_token = "guest_token"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name, @target_drop.guest_token, @drop.default_token).and_return({})
+    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
     @asset.send_to_drop(@target_drop)
   end
 
   it "should copy itself to another drop." do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
-    @target_drop.guest_token = "guest_token"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name, @target_drop.guest_token, @drop.default_token).and_return({})
+    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
     @asset.copy_to(@target_drop)
   end
 
   it "should move itself to another drop." do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
-    @target_drop.guest_token = "guest_token"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:move_asset).with(@drop.name, @asset.id, @target_drop.name, @target_drop.guest_token, @drop.default_token).and_return({})
+    @api.stub!(:move_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
     @asset.move_to(@target_drop)
   end
 
   it "should find itself" do
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
-    @api.should_receive(:asset).with(@drop.name, @asset.id, @drop.default_token).and_return({})
+    @api.should_receive(:asset).with(@drop.name, @asset.id).and_return({})
     Asset.find(@drop, @asset.id).should == @asset
   end
 
   it "should generate a signed url" do
-    @api.should_receive(:generate_asset_url).with(@drop.name, @asset.id, @drop.default_token)
+    @api.should_receive(:generate_asset_url).with(@drop.name, @asset.id)
     @asset.generate_url
   end
 
   it "should have an original file url" do
-    @api.should_receive(:generate_original_file_url).with(@drop.name, @asset.id, @drop.default_token)
+    @api.should_receive(:generate_original_file_url).with(@drop.name, @asset.id)
     @asset.original_file_url
   end
 
-  it "should get its embed_code" do
-    @client.should_receive(:handle).with(:response,{}).and_return({"response" => {"embed_code" => "my_embed_code"}})
-    @api.should_receive(:asset_embed_code).with(@drop.name, @asset.id, @drop.default_token).and_return({})
-    @asset.embed_code
-  end
   
 end
