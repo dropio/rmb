@@ -1,4 +1,4 @@
-source :rubygems
+source "http://rubygems.org"
 
 # TODO have this generated from gem spec or vice versa
 
