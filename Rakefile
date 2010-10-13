@@ -12,7 +12,7 @@ begin
   Echoe.new('rmb', Rmb::VERSION) do |echoe|
     echoe.summary = "A Ruby client library for the Rich Media Backbone (RMB) API (http://rmb.io)"
     echoe.author = ["Jake Good", "Eric Skiff", "Kunal Shah", "Seth Thomas Rasmussen", "Bryan Woods"]
-    echoe.email = ["jake@rmb.com", "eric@rmb.com", "kunal@rmb.com", "seth@rmb.com"]
+    echoe.email = ["jake@dropio.com", "eric@dropio.com", "kunal@dropio.com", "seth@dropio.com"]
     echoe.url = "http://github.com/dropio/rmb"
     echoe.retain_gemspec = true
     echoe.changelog = "History.rdoc"

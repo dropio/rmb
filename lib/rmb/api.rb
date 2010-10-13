@@ -10,7 +10,7 @@ class Rmb::Api
   format :json
 
   RUBY_VERSION = %w{MAJOR MINOR TEENY}.map { |k| Config::CONFIG[k] }.join(".")
-  USER_AGENT_STRING = "RmbAPI-Ruby/#{Rmb::VERSION} (Ruby #{RUBY_VERSION} #{Config::CONFIG["host"]}; +http://github.com/rmb/rmb/tree/)"
+  USER_AGENT_STRING = "RmbAPI-Ruby/#{Rmb::VERSION} (Ruby #{RUBY_VERSION} #{Config::CONFIG["host"]}; +http://github.com/dropio/rmb/tree/)"
   headers 'Accept' => 'application/json', 'User-Agent' => USER_AGENT_STRING, "Content-Type" => 'application/json'
   def initialize
     self.class.debug_output $stderr if Rmb::Config.debug
