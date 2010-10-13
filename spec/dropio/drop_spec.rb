@@ -28,7 +28,7 @@ describe Drop do
   
   it "should find drops by name" do
     @client.should_receive(:handle).with(:drop,{}).and_return(@mydrop)
-    @api.should_receive(:drop).with("mydrop", nil).and_return({})
+    @api.should_receive(:drop).and_return({})
     Drop.find("mydrop").should == @mydrop
   end
 

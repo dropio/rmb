@@ -27,7 +27,7 @@ describe Dropio::Asset do
     @client.should_receive(:handle).with(:asset,{}).and_return(@asset)
     expected_hash = {:url=> "http://drop.io", :contents=>nil, :description=>nil, :title=>nil}
     @asset.url = expected_hash[:url]
-    @api.stub!(:update_asset).with(@drop.name, @asset.id, expected_hash).and_return({})
+    @api.stub!(:update_asset).and_return({})
     @asset.save
   end
 
@@ -53,7 +53,7 @@ describe Dropio::Asset do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
+    @api.stub!(:copy_asset).and_return({})
     @asset.send_to_drop(@target_drop)
   end
 
@@ -61,7 +61,7 @@ describe Dropio::Asset do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:copy_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
+    @api.stub!(:copy_asset).and_return({})
     @asset.copy_to(@target_drop)
   end
 
@@ -69,7 +69,7 @@ describe Dropio::Asset do
     @target_drop = Drop.new
     @target_drop.name = "target_drop"
     @client.should_receive(:handle).with(:response,{}).and_return({"result" => "Success"})
-    @api.stub!(:move_asset).with(@drop.name, @asset.id, @target_drop.name).and_return({})
+    @api.stub!(:move_asset).and_return({})
     @asset.move_to(@target_drop)
   end
 
@@ -80,12 +80,12 @@ describe Dropio::Asset do
   end
 
   it "should generate a signed url" do
-    @api.should_receive(:generate_asset_url).with(@drop.name, @asset.id)
+    @api.should_receive(:generate_asset_url)
     @asset.generate_url
   end
 
   it "should have an original file url" do
-    @api.should_receive(:generate_original_file_url).with(@drop.name, @asset.id)
+    @api.should_receive(:generate_original_file_url)
     @asset.original_file_url
   end
 
