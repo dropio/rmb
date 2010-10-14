@@ -6,3 +6,4 @@ pkg
 *.gem
 *.swp
 driver.rb
+Gemfile.lock
