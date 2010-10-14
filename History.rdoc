@@ -1,3 +1,6 @@
+=== 3.0.1 / 2010-10-14
+* Extract RMB gem
+
 === 3.0 / 2010-09-21
 
 * Bump httparty requirement to 0.6.
