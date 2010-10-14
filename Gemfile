@@ -12,6 +12,7 @@ group :development, :test do
   gem "echoe"
   gem "rake"
   gem "rspec", "1.3.0"
+  gem "test-unit", "1.2.3"
   gem "diff-lcs"
   gem "fakeweb"
 end
