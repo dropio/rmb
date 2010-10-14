@@ -16,9 +16,9 @@ module Rmb
   
 end
 
-Rmb::Config.base_url   = "http://down.rmb.io"
+Rmb::Config.base_url   = "http://d.rmb.io"
 Rmb::Config.api_url    = "http://api.rmb.io"
-Rmb::Config.upload_url = "http://up.rmb.io/upload"
+Rmb::Config.upload_url = "http://u.rmb.io/upload"
 Rmb::Config.version    = "3.0"
 Rmb::Config.debug      = false
 Rmb::Config.timeout    = 60 # Default in Ruby
