@@ -18,9 +18,9 @@ describe Rmb::Asset do
   end
 
   it "should have the attributes of an Asset" do
-    @asset.should respond_to(:drop, :name, :type, :title, :description, :filesize, :created_at,
+    @asset.should respond_to(:id, :drop, :name, :type, :title, :description, :filesize, :created_at,
                              :status, :pages, :duration, :artist,
-                             :track_title, :height, :width, :contents, :url)
+                             :track_title, :height, :width, :contents, :url, :roles, :locations)
   end
 
   it "should save itself" do
