@@ -18,7 +18,7 @@ begin
     echoe.changelog = "History.rdoc"
     
     # TODO have this generated from Gemfile or vice versa
-    echoe.runtime_dependencies     = ["mime-types", "json", "httparty 0.6.1", "multipart-post 1.0.1", "activesupport 2.3.9"]
+    echoe.runtime_dependencies     = ["mime-types", "json", "httparty 0.6.1", "multipart-post 1.0.1", "orderedhash 0.0.6"]
     echoe.development_dependencies = ["rspec", "diff-lcs", "fakeweb"]
     
     echoe.ignore_pattern = "tmtags"

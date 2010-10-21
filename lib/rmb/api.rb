@@ -3,7 +3,7 @@ require 'mime/types'
 require 'httparty'
 require 'net/http/post/multipart'
 require 'json'
-require 'active_support/ordered_hash'
+require 'orderedhash'
 
 class Rmb::Api
   include HTTParty
@@ -253,19 +253,20 @@ class Rmb::Api
   
   def sort_hash_recursively(oldhash = {}, depth = 0)
     return false if depth > 4
-    sortedhash = ActiveSupport::OrderedHash.new
-    oldhash.keys.sort_by {|s| s.to_s}.each {|key| 
-        if oldhash[key].is_a? Hash
-            sortedhash[key] = sort_hash_recursively(oldhash[key], depth + 1)
-        elsif oldhash[key].is_a? Array
-            oldhash[key].map! do |element|
-                element = sort_hash_recursively(element, depth + 1)
-            end
-            sortedhash[key] = oldhash[key]
-        else
-            sortedhash[key] = oldhash[key].to_s
+    sortedhash = OrderedHash.new
+
+    oldhash.keys.sort_by {|s| s.to_s}.each do |key| 
+      if oldhash[key].is_a? Hash
+        sortedhash[key] = sort_hash_recursively(oldhash[key], depth + 1)
+      elsif oldhash[key].is_a? Array
+        oldhash[key].map! do |element|
+          element = sort_hash_recursively(element, depth + 1)
         end
-    }
+        sortedhash[key] = oldhash[key]
+      else
+        sortedhash[key] = oldhash[key].to_s
+      end
+    end
     return sortedhash
   end
   

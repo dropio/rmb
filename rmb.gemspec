@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rmb}
-  s.version = "3.0.2"
+  s.version = "3.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jake Good, Eric Skiff, Kunal Shah, Seth Thomas Rasmussen, Matthew Rathbone", "Bryan Woods"]
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<httparty>, ["= 0.6.1"])
       s.add_runtime_dependency(%q<multipart-post>, ["= 1.0.1"])
-      s.add_runtime_dependency(%q<activesupport>, ["= 2.3.9"])
+      s.add_runtime_dependency(%q<orderedhash>, ["= 0.0.6"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<test-unit>, ["= 1.2.3"])
       s.add_development_dependency(%q<diff-lcs>, [">= 0"])
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<httparty>, ["= 0.6.1"])
       s.add_dependency(%q<multipart-post>, ["= 1.0.1"])
-      s.add_runtime_dependency(%q<activesupport>, ["= 2.3.9"])
+      s.add_runtime_dependency(%q<orderedhash>, ["= 0.0.6"])
       s.add_dependency(%q<rspec>, [">= 0"])
       s.add_development_dependency(%q<test-unit>, ["= 1.2.3"])
       s.add_dependency(%q<diff-lcs>, [">= 0"])
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<httparty>, ["= 0.6.1"])
     s.add_dependency(%q<multipart-post>, ["= 1.0.1"])
-    s.add_runtime_dependency(%q<activesupport>, ["= 2.3.9"])
+    s.add_runtime_dependency(%q<orderedhash>, ["= 0.0.6"])
     s.add_dependency(%q<rspec>, [">= 0"])
     s.add_development_dependency(%q<test-unit>, ["= 1.2.3"])
     s.add_dependency(%q<diff-lcs>, [">= 0"])

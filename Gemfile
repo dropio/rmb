@@ -6,7 +6,7 @@ gem "mime-types"
 gem "json"
 gem "httparty", "0.6.1"
 gem "multipart-post"
-gem "activesupport", "2.3.9"
+gem "orderedhash", "0.0.6"
 
 group :development, :test do
   gem "echoe"
